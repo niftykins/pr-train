@@ -12,6 +12,18 @@ const emoji = require('node-emoji');
 const table = require('markdown-table');
 const width = require('string-width');
 
+const PR_TEMPLATE = `**Deploy coordination**:
+
+**Screenshot**
+
+**Trello**:
+
+**What**:
+**Why**:
+
+**Prerequisite PRs**:
+`;
+
 /**
  *
  * @param {simpleGit.SimpleGit} sg
@@ -181,6 +193,7 @@ async function ensurePrsExist({
     process.stdout.write(`Checking if PR for branch ${branch} already exists... `);
     const prs = await ghRepo.prsAsync({
       head: `${nick}:${branch}`,
+      state: 'all'
     });
     let prResponse = prs[0] && prs[0][0];
     let prExists = false;
@@ -189,11 +202,14 @@ async function ensurePrsExist({
       prExists = true;
     } else {
       console.log('nope');
+
+      const newTitle = await promptly.prompt(colors.bold(`PR title for ${branch}:`));
+
       const payload = {
         head: branch,
         base,
-        title,
-        body,
+        title: newTitle,
+        body: PR_TEMPLATE,
         draft,
       };
       const baseMessage = base === baseBranch ? colors.dim(` (against ${base})`) : '';
@@ -226,12 +242,8 @@ async function ensurePrsExist({
     const {
       title,
       body
-    } = prInfo.updating ?
-      prInfo // Updating existing PR: keep current body and title.
-      :
-      branch === combinedBranch ?
-      getCombinedBranchPrMsg() :
-      await constructPrMsg(sg, branch);
+    } = prInfo;
+
     const navigation = constructTrainNavigation(prDict, branch, combinedBranch);
     const newBody = upsertNavigationInBody(navigation, body);
     process.stdout.write(`Updating PR for branch ${branch}...`);
