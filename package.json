@@ -1,5 +1,5 @@
 {
-  "name": "git-pr-train",
+  "name": "@niftykins/pr-train",
   "version": "2.6.0",
   "description": "A tool to help manage PR chains",
   "main": "index.js",
