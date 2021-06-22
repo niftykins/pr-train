@@ -13,7 +13,7 @@ Doing those two things manually can be (very) tedious and frustrating, believe y
 
 ## Usage
 
-Install with `npm i -g git-pr-train`.
+Install with `npm i -g @niftykins/pr-train`
 
 Run `git pr-train --init` in your repo root to generate a `.pr-train.yml` file (don't forget to gitignore).
 
@@ -93,8 +93,7 @@ If you want to merge your branches one by one from the "bottom" as they get LGTM
 1.  Merge the LGTM'd branch into `master`
 2.  Merge `master` into next train branch (or rebase that branch on top of `master`)
 3.  Change the GitHub PR base to `master` so that the diff only contains the expected changes
-4.  Delete the merged branch from `.pr-train.yml`
-5.  Run `git pr-train` to propagate the changes through the train
+4.  Run `git pr-train` to propagate the changes through the train
 
 Note that steps 1-3 are not pr-train specific, that's just how one-by-one workflow generally works.
 
@@ -130,8 +129,8 @@ Run `git pr-train` in your working dir when you're on any branch that belongs to
 
 _All your base are belong to us._ - CATS
 
-Are you working in a repository that doesn't use `master` as the main (default) branch? 
-For example, newer repos use `main` instead. 
+Are you working in a repository that doesn't use `master` as the main (default) branch?
+For example, newer repos use `main` instead.
 Or do you have a different branch that you want all PR trains to use as a base?
 
 Add a section to the top of the config like so:
@@ -146,7 +145,7 @@ trains:
 
 ### Override the base branch when creating PRs
 
-You can override the base branch to use when creating PRs by passing the `--base <branch-name>`. This takes precedence 
+You can override the base branch to use when creating PRs by passing the `--base <branch-name>`. This takes precedence
 over the main branch specified in the config file.
 
 e.g. `git pr-train -p -c -b feat/my-feature-base`
@@ -155,3 +154,13 @@ e.g. `git pr-train -p -c -b feat/my-feature-base`
 
 To have the command output include a link to the PR that was created or updated,
 simply add `print-urls: true` to the `prs` section of the config file.
+
+## Some handy git aliases
+
+Remembering all of the flags can difficult at times so here's some aliases you can add to your `.gitconfig` file to make it possible to run `git train` etc
+
+```
+train = pr-train -p
+list = pr-train -l
+toc = pr-train -c
+```
