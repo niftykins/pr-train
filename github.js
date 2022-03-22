@@ -16,14 +16,14 @@ const PR_TEMPLATE = `**Deploy coordination:** (if anything required, make sure t
 
 **Screenshot:**
 
-**Context link:**
+**Context link:** 
 
 **What:** 
 **Why:** 
 
-**Prerequisite PRs:** 
-
 **Have any tests been added?** 
+
+**Prerequisite PRs:** 
 `;
 
 /**
