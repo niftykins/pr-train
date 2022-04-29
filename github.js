@@ -12,16 +12,18 @@ const emoji = require('node-emoji');
 const table = require('markdown-table');
 const width = require('string-width');
 
-const PR_TEMPLATE = `**Deploy coordination**:
+const PR_TEMPLATE = `**Deploy coordination:** (if anything required, make sure to add the requires-deploy-coordination label on the PR)
 
-**Screenshot**
+**Screenshot:**
 
-**Trello**:
+**Context link:** 
 
-**What**:
-**Why**:
+**What:** 
+**Why:** 
 
-**Prerequisite PRs**:
+**Have any tests been added?** 
+
+**Prerequisite PRs:** 
 `;
 
 /**
